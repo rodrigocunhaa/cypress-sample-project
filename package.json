@@ -9,6 +9,7 @@
   "author": "Alex Candido",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^6.6.0"
+    "cypress": "^6.6.0",
+    "cypress-xpath": "^1.6.2"
   }
 }
