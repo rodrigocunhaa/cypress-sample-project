@@ -21,3 +21,10 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// Custom logic for filtering XHR requests
+Cypress.Server.defaults({
+    whitelist: (xhr) => {
+        return true;
+    }
+})
