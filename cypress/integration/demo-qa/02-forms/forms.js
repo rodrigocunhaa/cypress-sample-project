@@ -12,7 +12,7 @@ describe("Test Forms on Demo QA site", () => {
         
         cy.xpath("//input[@id='userEmail']").type("nullchar@demoqa.com");
 
-        cy.xpath("//input[@type='radio']").first().check({force: true});
+        cy.xpath("//input[@type='radio']").check('Male', {force: true});
 
         cy.xpath("//input[@id='userNumber']").type("4865596142");
 
