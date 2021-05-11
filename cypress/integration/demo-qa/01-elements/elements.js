@@ -37,4 +37,14 @@ describe("Test Elements on Demo QA site", () => {
         cy.xpath("//div[@id='result']").should('include.text', 'private');
 
     });
+
+    it("Should be able to fill Radio Button", () => {
+
+        cy.visit("https://www.demoqa.com/radio-button");
+
+        cy.xpath("//input[@id='impressiveRadio']").check({force: true});
+
+        cy.xpath("//span[@class='text-success']").should('include.text', 'Impressive');
+
+    });
 });
