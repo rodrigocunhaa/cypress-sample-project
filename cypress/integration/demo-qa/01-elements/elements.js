@@ -105,4 +105,73 @@ describe("Test Elements on Demo QA site", () => {
         cy.xpath("//p[@id='dynamicClickMessage']").should('include.text', 'You have done a dynamic click');
 
     });
+
+    it("Should be able to interact with links", () => {
+
+        cy.visit("https://www.demoqa.com/links");
+
+        cy.xpath("//a[@id='simpleLink']").invoke('removeAttr', 'target');
+
+        cy.xpath("//a[@id='simpleLink']").click();        
+
+        cy.url().should('to.equal', 'https://www.demoqa.com/');
+
+        cy.url().should('not.include', 'links');
+
+        cy.visit("https://www.demoqa.com/links");
+
+        cy.xpath("//a[@id='dynamicLink']").invoke('removeAttr', 'target');
+
+        cy.xpath("//a[@id='dynamicLink']").click();        
+
+        cy.url().should('to.equal', 'https://www.demoqa.com/');
+
+        cy.url().should('not.include', 'links');
+
+        cy.visit("https://www.demoqa.com/links");
+
+
+        cy.xpath("//a[@id='created']").click(link => {
+
+            cy.request(link.prop('href')).should('have.property', 'status', "201")
+
+        });
+
+        cy.xpath("//a[@id='no-content']").then(link => {
+
+            cy.request(link.prop('href')).its('status').should('eq', 204);
+
+        });
+
+        cy.xpath("//a[@id='moved']").then(link => {
+
+            cy.request(link.prop('href')).its('status').should('eq', 301);
+
+        });
+
+        cy.xpath("//a[@id='bad-request']").then(link => {
+
+            cy.request(link.prop('href')).its('status').should('eq', 400);
+
+        });
+
+        cy.xpath("//a[@id='unauthorized']").then(link => {
+
+            cy.request(link.prop('href')).its('status').should('eq', 401);
+
+        });
+
+        cy.xpath("//a[@id='forbidden']").then(link => {
+
+            cy.request(link.prop('href')).its('status').should('eq', 403);
+
+        });
+
+        cy.xpath("//a[@id='invalid-url']").then(link => {
+
+            cy.request(link.prop('href')).its('status').should('eq', 403);
+
+        });
+
+    });
 });
