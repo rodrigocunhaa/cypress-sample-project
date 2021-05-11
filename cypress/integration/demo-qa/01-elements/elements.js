@@ -47,4 +47,44 @@ describe("Test Elements on Demo QA site", () => {
         cy.xpath("//span[@class='text-success']").should('include.text', 'Impressive');
 
     });
+
+    it("Should be able to read from Table", () => {
+
+        cy.visit("https://www.demoqa.com/webtables");
+
+        cy.xpath("//input[@id='searchBox']").type("2000");
+
+        cy.xpath("//div[@role='gridcell']").should('include.text', 'Alden');
+
+        cy.xpath("//div[@role='gridcell']").should('include.text', '12000');
+
+        cy.xpath("//div[@role='gridcell']").should('include.text', 'Kierra');
+
+        cy.xpath("//div[@role='gridcell']").should('include.text', '2000');
+
+        cy.xpath("//button[@id='addNewRecordButton']").click();
+
+        cy.xpath("//input[@id='firstName']").type("Diamond");
+
+        cy.xpath("//input[@id='lastName']").type("Farley");
+
+        cy.xpath("//input[@id='userEmail']").type("dfarley@demoqa.com");
+
+        cy.xpath("//input[@id='age']").type("45");
+
+        cy.xpath("//input[@id='salary']").type("2000");
+
+        cy.xpath("//input[@id='department']").type("IT");
+
+        cy.xpath("//button[@id='submit']").click();
+
+        cy.xpath("//div[@role='gridcell']").should('include.text', 'Farley');
+
+        cy.xpath("//input[@id='searchBox']").clear();
+
+        cy.xpath("//input[@id='searchBox']").type("45");
+
+        cy.xpath("//div[@role='gridcell']").should('not.contain.text', 'Kierra');
+
+    });
 });
