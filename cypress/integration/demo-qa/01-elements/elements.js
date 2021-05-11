@@ -87,4 +87,22 @@ describe("Test Elements on Demo QA site", () => {
         cy.xpath("//div[@role='gridcell']").should('not.contain.text', 'Kierra');
 
     });
+
+    it("Should be able to interact with Buttons (click, double-click and right-click)", () => {
+
+        cy.visit("https://www.demoqa.com/buttons");
+
+        cy.xpath("//button[@id='doubleClickBtn']").dblclick();
+
+        cy.xpath("//p[@id='doubleClickMessage']").should('include.text', 'You have done a double click');
+
+        cy.xpath("//button[@id='rightClickBtn']").rightclick();
+
+        cy.xpath("//p[@id='rightClickMessage']").should('include.text', 'You have done a right click');
+
+        cy.xpath("//button[@type='button' and (text()='Click Me')]").click();
+
+        cy.xpath("//p[@id='dynamicClickMessage']").should('include.text', 'You have done a dynamic click');
+
+    });
 });
