@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
 
-const { select } = require("async");
-
 describe("Test Forms on Demo QA site", () => {
 
     it("Should be able to fill and submit the form", () => {
