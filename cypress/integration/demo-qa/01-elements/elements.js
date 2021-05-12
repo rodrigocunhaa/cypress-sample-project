@@ -130,48 +130,40 @@ describe("Test Elements on Demo QA site", () => {
 
         cy.visit("https://www.demoqa.com/links");
 
+        cy.intercept('GET', '/created').as('getCreated');
+        cy.xpath("//a[@id='created']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 201 and status text Created');
+        cy.wait('@getCreated').its('response.statusCode').should('eq', 201);
 
-        cy.xpath("//a[@id='created']").click(link => {
+        cy.intercept('GET', '/no-content').as('getNoContent');
+        cy.xpath("//a[@id='no-content']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 204 and status text No Content');
+        cy.wait('@getNoContent').its('response.statusCode').should('eq', 204);
 
-            cy.request(link.prop('href')).should('have.property', 'status', "201")
+        cy.intercept('GET', '/moved').as('getMoved');
+        cy.xpath("//a[@id='moved']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 301 and status text Moved Permanently');
+        cy.wait('@getMoved').its('response.statusCode').should('eq', 301);
 
-        });
+        cy.intercept('GET', '/bad-request').as('getBadRequest');
+        cy.xpath("//a[@id='bad-request']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 400 and status text Bad Request');
+        cy.wait('@getBadRequest').its('response.statusCode').should('eq', 400);
 
-        cy.xpath("//a[@id='no-content']").then(link => {
+        cy.intercept('GET', '/unauthorized').as('getUnauthorized');
+        cy.xpath("//a[@id='unauthorized']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 401 and status text Unauthorized');
+        cy.wait('@getUnauthorized').its('response.statusCode').should('eq', 401);
 
-            cy.request(link.prop('href')).its('status').should('eq', 204);
+        cy.intercept('GET', '/forbidden').as('getForbidden');
+        cy.xpath("//a[@id='forbidden']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 403 and status text Forbidden');
+        cy.wait('@getForbidden').its('response.statusCode').should('eq', 403);
 
-        });
-
-        cy.xpath("//a[@id='moved']").then(link => {
-
-            cy.request(link.prop('href')).its('status').should('eq', 301);
-
-        });
-
-        cy.xpath("//a[@id='bad-request']").then(link => {
-
-            cy.request(link.prop('href')).its('status').should('eq', 400);
-
-        });
-
-        cy.xpath("//a[@id='unauthorized']").then(link => {
-
-            cy.request(link.prop('href')).its('status').should('eq', 401);
-
-        });
-
-        cy.xpath("//a[@id='forbidden']").then(link => {
-
-            cy.request(link.prop('href')).its('status').should('eq', 403);
-
-        });
-
-        cy.xpath("//a[@id='invalid-url']").then(link => {
-
-            cy.request(link.prop('href')).its('status').should('eq', 403);
-
-        });
+        cy.intercept('GET', '/invalid-url').as('getInvalidUrl');
+        cy.xpath("//a[@id='invalid-url']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 404 and status text Not Found');
+        cy.wait('@getInvalidUrl').its('response.statusCode').should('eq', 404);
 
     });
 });
