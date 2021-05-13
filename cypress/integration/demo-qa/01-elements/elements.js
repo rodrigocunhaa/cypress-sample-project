@@ -47,4 +47,123 @@ describe("Test Elements on Demo QA site", () => {
         cy.xpath("//span[@class='text-success']").should('include.text', 'Impressive');
 
     });
+
+    it("Should be able to read from Table", () => {
+
+        cy.visit("https://www.demoqa.com/webtables");
+
+        cy.xpath("//input[@id='searchBox']").type("2000");
+
+        cy.xpath("//div[@role='gridcell']").should('include.text', 'Alden');
+
+        cy.xpath("//div[@role='gridcell']").should('include.text', '12000');
+
+        cy.xpath("//div[@role='gridcell']").should('include.text', 'Kierra');
+
+        cy.xpath("//div[@role='gridcell']").should('include.text', '2000');
+
+        cy.xpath("//button[@id='addNewRecordButton']").click();
+
+        cy.xpath("//input[@id='firstName']").type("Diamond");
+
+        cy.xpath("//input[@id='lastName']").type("Farley");
+
+        cy.xpath("//input[@id='userEmail']").type("dfarley@demoqa.com");
+
+        cy.xpath("//input[@id='age']").type("45");
+
+        cy.xpath("//input[@id='salary']").type("2000");
+
+        cy.xpath("//input[@id='department']").type("IT");
+
+        cy.xpath("//button[@id='submit']").click();
+
+        cy.xpath("//div[@role='gridcell']").should('include.text', 'Farley');
+
+        cy.xpath("//input[@id='searchBox']").clear();
+
+        cy.xpath("//input[@id='searchBox']").type("45");
+
+        cy.xpath("//div[@role='gridcell']").should('not.contain.text', 'Kierra');
+
+    });
+
+    it("Should be able to interact with Buttons (click, double-click and right-click)", () => {
+
+        cy.visit("https://www.demoqa.com/buttons");
+
+        cy.xpath("//button[@id='doubleClickBtn']").dblclick();
+
+        cy.xpath("//p[@id='doubleClickMessage']").should('include.text', 'You have done a double click');
+
+        cy.xpath("//button[@id='rightClickBtn']").rightclick();
+
+        cy.xpath("//p[@id='rightClickMessage']").should('include.text', 'You have done a right click');
+
+        cy.xpath("//button[@type='button' and (text()='Click Me')]").click();
+
+        cy.xpath("//p[@id='dynamicClickMessage']").should('include.text', 'You have done a dynamic click');
+
+    });
+
+    it("Should be able to interact with links", () => {
+
+        cy.visit("https://www.demoqa.com/links");
+
+        cy.xpath("//a[@id='simpleLink']").invoke('removeAttr', 'target');
+
+        cy.xpath("//a[@id='simpleLink']").click();        
+
+        cy.url().should('to.equal', 'https://www.demoqa.com/');
+
+        cy.url().should('not.include', 'links');
+
+        cy.visit("https://www.demoqa.com/links");
+
+        cy.xpath("//a[@id='dynamicLink']").invoke('removeAttr', 'target');
+
+        cy.xpath("//a[@id='dynamicLink']").click();        
+
+        cy.url().should('to.equal', 'https://www.demoqa.com/');
+
+        cy.url().should('not.include', 'links');
+
+        cy.visit("https://www.demoqa.com/links");
+
+        cy.intercept('GET', '/created').as('getCreated');
+        cy.xpath("//a[@id='created']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 201 and status text Created');
+        cy.wait('@getCreated').its('response.statusCode').should('eq', 201);
+
+        cy.intercept('GET', '/no-content').as('getNoContent');
+        cy.xpath("//a[@id='no-content']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 204 and status text No Content');
+        cy.wait('@getNoContent').its('response.statusCode').should('eq', 204);
+
+        cy.intercept('GET', '/moved').as('getMoved');
+        cy.xpath("//a[@id='moved']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 301 and status text Moved Permanently');
+        cy.wait('@getMoved').its('response.statusCode').should('eq', 301);
+
+        cy.intercept('GET', '/bad-request').as('getBadRequest');
+        cy.xpath("//a[@id='bad-request']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 400 and status text Bad Request');
+        cy.wait('@getBadRequest').its('response.statusCode').should('eq', 400);
+
+        cy.intercept('GET', '/unauthorized').as('getUnauthorized');
+        cy.xpath("//a[@id='unauthorized']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 401 and status text Unauthorized');
+        cy.wait('@getUnauthorized').its('response.statusCode').should('eq', 401);
+
+        cy.intercept('GET', '/forbidden').as('getForbidden');
+        cy.xpath("//a[@id='forbidden']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 403 and status text Forbidden');
+        cy.wait('@getForbidden').its('response.statusCode').should('eq', 403);
+
+        cy.intercept('GET', '/invalid-url').as('getInvalidUrl');
+        cy.xpath("//a[@id='invalid-url']").click();
+        cy.xpath("//p[@id='linkResponse']").should('include.text', 'Link has responded with staus 404 and status text Not Found');
+        cy.wait('@getInvalidUrl').its('response.statusCode').should('eq', 404);
+
+    });
 });
