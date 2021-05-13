@@ -6,17 +6,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
-import pages.ElementsCheckBoxPage;
-import pages.ElementsRadioButtonPage;
-import pages.ElementsTextBoxPage;
+import pages.*;
 import util.Constants;
 import util.DriverFactory;
+
+import java.util.List;
 
 public class TestElements {
     private WebDriver driver;
     private final ElementsTextBoxPage elementsTextBoxPage = new ElementsTextBoxPage();
     private final ElementsCheckBoxPage elementsCheckBoxPage = new ElementsCheckBoxPage();
     private final ElementsRadioButtonPage elementsRadioButtonPage = new ElementsRadioButtonPage();
+    private final ElementsWebTablesPage elementsWebTablesPage = new ElementsWebTablesPage();
+    private final ElementsButtonsPage elementsButtonsPage = new ElementsButtonsPage();
 
     @Before
     public void before(){
@@ -50,10 +52,51 @@ public class TestElements {
 
     @Test
     @DisplayName("Should be able to fill Radio Button")
-    public void testElementsRadiobutton(){
+    public void testElementsRadioButton(){
         driver.get(Constants.TOOLS_QA_ELEMENTS_RADIO_BUTTON_URL);
         elementsRadioButtonPage.selectImpressiveOption();
         Assert.assertTrue(elementsRadioButtonPage.getResultsOutput().contains("Impressive"));
+    }
+
+    @Test
+    @DisplayName("Should be able to read from Table")
+    public void testElementsWebTables(){
+        driver.get(Constants.TOOLS_QA_ELEMENTS_WEB_TABLES_URL);
+
+        elementsWebTablesPage.searchByText("2000");
+        List<String> allTextFromTable = elementsWebTablesPage.getAllTableCellText();
+
+        Assert.assertTrue(allTextFromTable.contains("Alden"));
+        Assert.assertTrue(allTextFromTable.contains("12000"));
+        Assert.assertTrue(allTextFromTable.contains("Kierra"));
+        Assert.assertTrue(allTextFromTable.contains("2000"));
+
+        elementsWebTablesPage.addNewRecord("Diamond", "Farley", "dfarley@demoqa.com", "45", "2000", "IT");
+
+        allTextFromTable = elementsWebTablesPage.getAllTableCellText();
+        Assert.assertTrue(allTextFromTable.contains("Farley"));
+
+        elementsWebTablesPage.searchByText("45");
+
+        allTextFromTable = elementsWebTablesPage.getAllTableCellText();
+        Assert.assertFalse(allTextFromTable.contains("Kierra"));
+
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with Buttons (click, double-click and right-click)")
+    public void testElementsButtons(){
+        driver.get(Constants.TOOLS_QA_ELEMENTS_BUTTONS_URL);
+
+        elementsButtonsPage.clickOnDoubleClickButton();
+        Assert.assertTrue(elementsButtonsPage.getDoubleClickMessage().contains("You have done a double click"));
+
+        elementsButtonsPage.clickOnRightClickButton();
+        Assert.assertTrue(elementsButtonsPage.getRightClickMessage().contains("You have done a right click"));
+
+        elementsButtonsPage.clickOnClickMeButton();
+        Assert.assertTrue(elementsButtonsPage.getClickMeMessage().contains("You have done a dynamic click"));
+
     }
 
     @After

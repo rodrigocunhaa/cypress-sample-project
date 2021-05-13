@@ -8,6 +8,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BasePage {
 
     private final WebDriver driver;
@@ -25,6 +28,21 @@ public class BasePage {
         driver.findElement(locator).click();
     }
 
+    public void waitAndClear(By locator) {
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+        driver.findElement(locator).clear();
+    }
+
+    public void waitAndDoubleClick(By locator) {
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+        action.doubleClick(driver.findElement(locator)).perform();
+    }
+
+    public void waitAndRightClick(By locator) {
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+        action.contextClick(driver.findElement(locator)).perform();
+    }
+
     public void waitAndSendKeys(By locator, String keys) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         driver.findElement(locator).sendKeys(keys);
@@ -36,8 +54,13 @@ public class BasePage {
         executor.executeScript("arguments[0].click();", radioButton);
     }
 
-    public void scrollDown(){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,450)", "");
+    public List<String> getAllTextFromElements (By locator) {
+        List<String> allText = new ArrayList<>();
+
+        for (WebElement element : driver.findElements(locator)){
+            allText.add(element.getText());
+        }
+
+        return allText;
     }
 }
