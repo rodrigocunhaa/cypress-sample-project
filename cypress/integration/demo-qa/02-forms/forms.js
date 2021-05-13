@@ -44,11 +44,11 @@ describe("Test Forms on Demo QA site", () => {
 
         cy.xpath("//div[@id='state']").click();
 
-        cy.xpath("//*[@id='react-select-3-option-0']").should('have.text','NCR').click();
+        cy.xpath("//*[contains(@tabindex,'-1')]").contains('NCR').click();
 
         cy.xpath("//div[@id='city']").click();
 
-        cy.xpath("//*[@id='react-select-4-option-2']").should('have.text','Noida').click();
+        cy.xpath("//*[contains(@tabindex,'-1')]").contains('Noida').click();
 
         cy.xpath("//button[@id='submit']").click();
 
