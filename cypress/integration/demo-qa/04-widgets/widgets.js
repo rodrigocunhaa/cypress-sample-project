@@ -52,4 +52,22 @@ describe("Test Widgets on Demo QA site", () => {
         cy.xpath("//*[contains(@class,'auto-complete__single-value')]").contains('Purple').should('not.exist');
         cy.xpath("//*[contains(@class,'auto-complete__single-value')]").contains('Green').should('be.visible');
     });
+
+    it("Should be able to interact with Slider", () => {
+
+        cy.visit("https://www.demoqa.com/slider");
+
+        cy.xpath("//input[@type='range']").invoke('val', 80).trigger('change');
+
+        cy.xpath("//input[@type='range']").invoke('attr', 'style', "--value:80;").trigger('change');
+
+        cy.xpath("//input[@type='range']").invoke('attr', 'value', "80").trigger('change');
+
+        cy.xpath("//div[contains(@class,'range-slider__tooltip--auto')]").invoke('attr', 'style', "left: calc(80% - 6px);");
+
+        cy.xpath("//input[contains(@id,'sliderValue')]").invoke('attr', 'value', '80').trigger('change');
+
+        cy.xpath("//input[contains(@id,'sliderValue')]").should('have.attr', 'value', '80');
+
+    });
 });
