@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
 import pages.*;
+import util.BasePage;
 import util.Constants;
 import util.DriverFactory;
 
@@ -14,15 +15,18 @@ import java.util.List;
 
 public class TestElements {
     private WebDriver driver;
+    private BasePage basePage;
     private final ElementsTextBoxPage elementsTextBoxPage = new ElementsTextBoxPage();
     private final ElementsCheckBoxPage elementsCheckBoxPage = new ElementsCheckBoxPage();
     private final ElementsRadioButtonPage elementsRadioButtonPage = new ElementsRadioButtonPage();
     private final ElementsWebTablesPage elementsWebTablesPage = new ElementsWebTablesPage();
     private final ElementsButtonsPage elementsButtonsPage = new ElementsButtonsPage();
+    private final ElementsLinksPage elementsLinksPage = new ElementsLinksPage();
 
     @Before
     public void before(){
         driver = DriverFactory.getDriver();
+        basePage = new BasePage(driver);
     }
 
     @Test
@@ -96,7 +100,28 @@ public class TestElements {
 
         elementsButtonsPage.clickOnClickMeButton();
         Assert.assertTrue(elementsButtonsPage.getClickMeMessage().contains("You have done a dynamic click"));
+    }
 
+    @Test
+    @DisplayName("Should be able to interact with links - with no endpoint validation and changing tabs")
+    public void testElementsLinks(){
+        driver.get(Constants.TOOLS_QA_LINKS_URL);
+
+        elementsLinksPage.clickSimpleLink();
+
+        basePage.switchToTab();
+
+        Assert.assertEquals("https://demoqa.com/", driver.getCurrentUrl());
+        Assert.assertFalse(driver.getCurrentUrl().contains("links"));
+
+        basePage.closeTabAndReturn();
+
+        elementsLinksPage.clickDynamicLink();
+
+        basePage.switchToTab();
+
+        Assert.assertEquals("https://demoqa.com/", driver.getCurrentUrl());
+        Assert.assertFalse(driver.getCurrentUrl().contains("links"));
     }
 
     @After
