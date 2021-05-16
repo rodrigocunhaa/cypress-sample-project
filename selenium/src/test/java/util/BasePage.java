@@ -6,8 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +62,31 @@ public class BasePage {
         for (WebElement element : driver.findElements(locator)){
             allText.add(element.getText());
         }
-
         return allText;
+    }
+
+    public void switchToTab() {
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
+    }
+
+    public void closeTabAndReturn() {
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.close();
+        driver.switchTo().window(tabs.get(0));
+    }
+
+    public void selectByValue(By locator, String value) {
+        Select dropdown = new Select(driver.findElement(locator));
+        dropdown.selectByVisibleText(value);
+    }
+
+    public void uploadImage(By locator, String fileName) {
+        File file = new File(fileName);
+        driver.findElement(locator).sendKeys(file.getAbsolutePath());
+    }
+    public void scrollUntilTheEnd() {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("window.scrollTo(0, document.body.scrollHeight)");
     }
 }

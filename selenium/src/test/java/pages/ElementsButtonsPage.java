@@ -40,7 +40,4 @@ public class ElementsButtonsPage {
         page.waitAndClick(clickMeButton);
     }
 
-
-
-
 }
