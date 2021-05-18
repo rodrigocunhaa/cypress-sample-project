@@ -53,7 +53,7 @@ describe("Test Widgets on Demo QA site", () => {
         cy.xpath("//*[contains(@class,'auto-complete__single-value')]").contains('Green').should('be.visible');
     });
 
-    it("Should be able to interact with Slider", () => {
+    it("Should be able to interact with Slider Widgets", () => {
 
         cy.visit("https://www.demoqa.com/slider");
 
