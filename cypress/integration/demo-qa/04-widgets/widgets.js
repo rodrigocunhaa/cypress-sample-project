@@ -109,7 +109,7 @@ describe("Test Widgets on Demo QA site", () => {
 
     });
 
-    it("Should be able to interact with Tool Tips", () => {
+    it("Should be able to interact with Tool Tips Widgets", () => {
 
         cy.visit("https://www.demoqa.com/tool-tips");
 
@@ -155,7 +155,7 @@ describe("Test Widgets on Demo QA site", () => {
 
     });
 
-    it("Should be able to interact with Progress Bar", () => {
+    it("Should be able to interact with Progress Bar Widgets", () => {
 
         cy.visit("https://www.demoqa.com/progress-bar");
 
