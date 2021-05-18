@@ -85,8 +85,14 @@ public class BasePage {
         File file = new File(fileName);
         driver.findElement(locator).sendKeys(file.getAbsolutePath());
     }
+
     public void scrollUntilTheEnd() {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
+
+    public boolean isElementPresent(By locator) {
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+        return driver.findElements(locator).size() != 0;
     }
 }

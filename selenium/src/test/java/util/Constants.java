@@ -10,5 +10,8 @@ public class Constants {
     public static final String TOOLS_QA_ELEMENTS_BUTTONS_URL = "https://www.demoqa.com/buttons";
     public static final String TOOLS_QA_LINKS_URL = "https://demoqa.com/links";
     public static final String TOOLS_QA_FORMS_PRACTICE_FORM_URL = "https://demoqa.com/automation-practice-form";
+    public static final String TOOLS_QA_ALERTS_FORMS_WINDOWS_MODAL_DIALOGS_URL = "https://www.demoqa.com/modal-dialogs";
+    public static final String TOOLS_QA_WIDGETS_ACCORDIAN_URL = "https://demoqa.com/accordian";
+
 
 }

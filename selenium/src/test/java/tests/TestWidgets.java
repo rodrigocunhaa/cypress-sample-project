@@ -1,0 +1,72 @@
+package tests;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.openqa.selenium.WebDriver;
+import pages.*;
+import util.BasePage;
+import util.Constants;
+import util.DriverFactory;
+
+public class TestWidgets {
+    private WebDriver driver;
+    private final WidgetsAccordianPage widgetsAccordianPage = new WidgetsAccordianPage();
+    private BasePage page;
+
+    @Before
+    public void before(){
+        driver = DriverFactory.getDriver();
+        page = new BasePage(driver);
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with Accordian Widgets")
+    public void testWidgetsAccordian() {
+
+        driver.get(Constants.TOOLS_QA_WIDGETS_ACCORDIAN_URL);
+
+        Assert.assertTrue(widgetsAccordianPage.getWhatIsLoremIpsumTitleText().contains("What is Lorem Ipsum?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhatIsLoremIpsumShownFlag());
+        Assert.assertTrue(widgetsAccordianPage.getWhereDoesItComeFromTitleText().contains("Where does it come from?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhereDoesItComeFromCollapsedFlag());
+        Assert.assertTrue(widgetsAccordianPage.getWhyDoWeUseItTitleText().contains("Why do we use it?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhyDoWeUseItCollapsedFlag());
+        Assert.assertTrue(widgetsAccordianPage.getWhatIsLoremIpsumText().contains("Lorem Ipsum is simply dummy text of the printing and typesetting industry."));
+
+        widgetsAccordianPage.clickWhereDoesItComeFromTitle();
+        Assert.assertTrue(widgetsAccordianPage.getWhatIsLoremIpsumTitleText().contains("What is Lorem Ipsum?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhatIsLoremIpsumCollapsedFlag());
+        Assert.assertTrue(widgetsAccordianPage.getWhereDoesItComeFromTitleText().contains("Where does it come from?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhereDoesItComeFromShownFlag());
+        Assert.assertTrue(widgetsAccordianPage.getWhyDoWeUseItTitleText().contains("Why do we use it?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhyDoWeUseItCollapsedFlag());
+        Assert.assertTrue(widgetsAccordianPage.getWhereDoesItComeFromText().contains("Contrary to popular belief, Lorem Ipsum is not simply random text."));
+
+        page.scrollUntilTheEnd();
+
+        widgetsAccordianPage.clickWhyDoWeUseItTitle();
+        Assert.assertTrue(widgetsAccordianPage.getWhatIsLoremIpsumTitleText().contains("What is Lorem Ipsum?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhatIsLoremIpsumCollapsedFlag());
+        Assert.assertTrue(widgetsAccordianPage.getWhereDoesItComeFromTitleText().contains("Where does it come from?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhereDoesItComeFromCollapsedFlag());
+        Assert.assertTrue(widgetsAccordianPage.getWhyDoWeUseItTitleText().contains("Why do we use it?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhyDoWeUseItShownFlag());
+        Assert.assertTrue(widgetsAccordianPage.getWhyDoWeUseItText().contains("It is a long established fact that a reader will be distracted by the readable content"));
+
+        widgetsAccordianPage.clickWhyDoWeUseItTitle();
+        Assert.assertTrue(widgetsAccordianPage.getWhatIsLoremIpsumTitleText().contains("What is Lorem Ipsum?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhatIsLoremIpsumCollapsedFlag());
+        Assert.assertTrue(widgetsAccordianPage.getWhereDoesItComeFromTitleText().contains("Where does it come from?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhereDoesItComeFromCollapsedFlag());
+        Assert.assertTrue(widgetsAccordianPage.getWhyDoWeUseItTitleText().contains("Why do we use it?"));
+        Assert.assertTrue(widgetsAccordianPage.isWhyDoWeUseItCollapsedFlag());
+    }
+
+    @After
+    public void after(){
+        DriverFactory.quitDriver();
+    }
+}
