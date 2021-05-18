@@ -108,4 +108,50 @@ describe("Test Widgets on Demo QA site", () => {
         cy.xpath("//div[@id='demo-tabpane-more']").should('have.attr', 'aria-hidden', 'true').and('not.have.class', 'active show');
 
     });
+
+    it("Should be able to interact with Tool Tips", () => {
+
+        cy.visit("https://www.demoqa.com/tool-tips");
+
+        cy.xpath("//button[@id='toolTipButton']")
+            .invoke('show')
+            .trigger('mouseover')
+            .wait(1000)
+            .should('have.attr', 'aria-describedby', 'buttonToolTip')
+            .should('contains.text', 'Hover me to see')
+            .trigger('mouseleave');
+
+        cy.xpath("//div[@id='buttonToolTip']").should('have.text','You hovered over the Button');
+
+        cy.xpath("//input[@id='toolTipTextField']")
+        .invoke('show')
+        .trigger('mouseover')
+        .wait(1000)
+        .should('have.attr', 'aria-describedby', 'textFieldToolTip')
+        .should('have.attr', 'placeholder', 'Hover me to see')
+        .trigger('mouseleave');
+
+        cy.xpath("//div[@id='textFieldToolTip']").should('have.text','You hovered over the text field');
+
+        cy.xpath("//a[@href='javascript:void(0)' and contains(text(),'Contrary')]")
+        .invoke('show')
+        .trigger('mouseover')
+        .wait(1000)
+        .should('have.attr', 'aria-describedby', 'contraryTexToolTip')
+        .should('contains.text', 'Contrary')
+        .trigger('mouseleave');
+
+        cy.xpath("//div[@id='contraryTexToolTip']").should('have.text','You hovered over the Contrary');
+
+        cy.xpath("//a[@href='javascript:void(0)' and contains(text(),'1.10.32')]")
+        .invoke('show')
+        .trigger('mouseover')
+        .wait(1000)
+        .should('have.attr', 'aria-describedby', 'sectionToolTip')
+        .should('contains.text', '1.10.32')
+        .trigger('mouseleave');
+
+        cy.xpath("//div[@id='sectionToolTip']").should('have.text','You hovered over the 1.10.32');
+
+    });
 });
