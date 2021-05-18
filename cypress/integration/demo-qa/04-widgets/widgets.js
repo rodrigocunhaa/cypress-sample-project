@@ -70,4 +70,42 @@ describe("Test Widgets on Demo QA site", () => {
         cy.xpath("//input[contains(@id,'sliderValue')]").should('have.attr', 'value', '80');
 
     });
+
+    it("Should be able to interact with Tabs Widgets", () => {
+
+        cy.visit("https://www.demoqa.com/tabs");
+
+        cy.xpath("//a[@id='demo-tab-what']").should('have.text','What').should('have.attr', 'aria-selected', 'true').and('have.class', 'nav-link active');
+        cy.xpath("//a[@id='demo-tab-origin']").should('have.attr', 'aria-selected', 'false').and('not.have.class', 'nav-link active');
+        cy.xpath("//a[@id='demo-tab-use']").should('have.text','Use').should('have.attr', 'aria-selected', 'false').and('not.have.class', 'nav-link active');
+        cy.xpath("//a[@id='demo-tab-more']").should('have.text','More').should('have.attr', 'aria-selected', 'false').should('have.class', 'nav-link disabled').and('have.attr','aria-disabled', 'true');
+        cy.xpath("//div[@id='demo-tabpane-what']").should('contains.text','Lorem Ipsum is simply dummy text of the printing and typesetting industry.');
+        cy.xpath("//div[@id='demo-tabpane-what']").should('have.attr', 'aria-hidden', 'false').and('have.class', 'active show');
+        cy.xpath("//div[@id='demo-tabpane-origin']").should('have.attr', 'aria-hidden', 'true').and('not.have.class', 'active show');
+        cy.xpath("//div[@id='demo-tabpane-use']").should('have.attr', 'aria-hidden', 'true').and('not.have.class', 'active show');
+        cy.xpath("//div[@id='demo-tabpane-more']").should('have.attr', 'aria-hidden', 'true').and('not.have.class', 'active show');
+
+        cy.xpath("//a[@id='demo-tab-origin']").should('have.text', 'Origin').click();
+        cy.xpath("//a[@id='demo-tab-origin']").should('have.text','Origin').should('have.attr', 'aria-selected', 'true').and('have.class', 'nav-link active');
+        cy.xpath("//a[@id='demo-tab-what']").should('have.text', 'What').should('have.attr', 'aria-selected', 'false').and('not.have.class', 'nav-link active');
+        cy.xpath("//a[@id='demo-tab-use']").should('have.text', 'Use').should('have.attr', 'aria-selected', 'false').and('not.have.class', 'nav-link active');
+        cy.xpath("//a[@id='demo-tab-more']").should('have.text','More').should('have.attr', 'aria-selected', 'false').should('have.class', 'nav-link disabled').and('have.attr','aria-disabled', 'true');
+        cy.xpath("//div[@id='demo-tabpane-origin']").should('contains.text','Contrary to popular belief, Lorem Ipsum is not simply random text.');
+        cy.xpath("//div[@id='demo-tabpane-origin']").should('have.attr', 'aria-hidden', 'false').and('have.class', 'active show');
+        cy.xpath("//div[@id='demo-tabpane-what']").should('have.attr', 'aria-hidden', 'true').and('not.have.class', 'active show');
+        cy.xpath("//div[@id='demo-tabpane-use']").should('have.attr', 'aria-hidden', 'true').and('not.have.class', 'active show');
+        cy.xpath("//div[@id='demo-tabpane-more']").should('have.attr', 'aria-hidden', 'true').and('not.have.class', 'active show');
+
+        cy.xpath("//a[@id='demo-tab-use']").should('have.text', 'Use').click();
+        cy.xpath("//a[@id='demo-tab-use']").should('have.text','Use').should('have.attr', 'aria-selected', 'true').and('have.class', 'nav-link active');
+        cy.xpath("//a[@id='demo-tab-what']").should('have.text', 'What').should('have.attr', 'aria-selected', 'false').and('not.have.class', 'nav-link active');
+        cy.xpath("//a[@id='demo-tab-origin']").should('have.text', 'Origin').should('have.attr', 'aria-selected', 'false').and('not.have.class', 'nav-link active');
+        cy.xpath("//a[@id='demo-tab-more']").should('have.text','More').should('have.attr', 'aria-selected', 'false').should('have.class', 'nav-link disabled').and('have.attr','aria-disabled', 'true');
+        cy.xpath("//div[@id='demo-tabpane-use']").should('contains.text','It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.');
+        cy.xpath("//div[@id='demo-tabpane-use']").should('have.attr', 'aria-hidden', 'false').and('have.class', 'active show');
+        cy.xpath("//div[@id='demo-tabpane-what']").should('have.attr', 'aria-hidden', 'true').and('not.have.class', 'active show');
+        cy.xpath("//div[@id='demo-tabpane-origin']").should('have.attr', 'aria-hidden', 'true').and('not.have.class', 'active show');
+        cy.xpath("//div[@id='demo-tabpane-more']").should('have.attr', 'aria-hidden', 'true').and('not.have.class', 'active show');
+
+    });
 });
