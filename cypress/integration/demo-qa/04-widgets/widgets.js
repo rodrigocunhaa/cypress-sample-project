@@ -154,4 +154,38 @@ describe("Test Widgets on Demo QA site", () => {
         cy.xpath("//div[@id='sectionToolTip']").should('have.text','You hovered over the 1.10.32');
 
     });
+
+    it("Should be able to interact with Progress Bar", () => {
+
+        cy.visit("https://www.demoqa.com/progress-bar");
+
+        cy.xpath("//button[@id='startStopButton']").click();
+
+        cy.wait(5000);
+
+        cy.xpath("//div[@aria-valuenow]").should('have.attr', 'aria-valuenow', "50");
+        cy.xpath("//div[@aria-valuenow]").should('have.text', "50%");
+        cy.xpath("//div[@aria-valuenow]").should('have.attr', 'style', "width: 50%;");
+
+        cy.xpath("//button[@id='startStopButton']").click({force: true});
+        cy.xpath("//button[@id='startStopButton']").click({force: true});
+
+        cy.wait(5000);
+
+        cy.xpath("//div[@aria-valuenow]").should('have.attr', 'aria-valuenow', "100");
+        cy.xpath("//div[@aria-valuenow]").should('have.text', "100%");
+        cy.xpath("//div[contains(@class,'bg-success')]").should('have.text', "100%");
+        cy.xpath("//div[@aria-valuenow]").should('have.attr', 'style', "width: 100%;");
+
+        cy.xpath("//button[@id='resetButton']").click();
+
+        cy.xpath("//div[@aria-valuenow]").invoke('attr', 'aria-valuenow', "50").trigger('change', { force: true });
+        cy.xpath("//div[@aria-valuenow]").invoke('text', '50%').trigger('change',{ force: true });
+        cy.xpath("//div[@aria-valuenow]").invoke('attr', 'style', "width: 50%;").trigger('change',{ force: true });
+
+        cy.xpath("//div[@aria-valuenow]").should('have.attr', 'aria-valuenow', "50");
+        cy.xpath("//div[@aria-valuenow]").should('have.text', "50%");
+        cy.xpath("//div[@aria-valuenow]").should('have.attr', 'style', "width: 50%;");
+
+    });
 });
