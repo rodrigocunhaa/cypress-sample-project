@@ -224,6 +224,23 @@ describe("Test Widgets on Demo QA site", () => {
 
     });
 
+    it("Should be able to interact with Menu Widgets", () => {
+
+        cy.visit("https://demoqa.com/menu");
+
+        cy.xpath("//div[@class='nav-menu-container']").contains('Main Item 1').should('be.visible');
+        cy.xpath("//div[@class='nav-menu-container']").contains('Main Item 2').should('be.visible');
+        cy.xpath("//div[@class='nav-menu-container']").contains('Main Item 1').should('be.visible');
+
+        cy.xpath("//div[@class='nav-menu-container']").contains('Main Item 2').realHover();
+        cy.xpath("//div[@class='nav-menu-container']").contains('Sub Item').should('be.visible');
+        cy.xpath("//div[@class='nav-menu-container']").contains('SUB SUB LIST »').should('be.visible');
+        
+        cy.xpath("//div[@class='nav-menu-container']").contains('SUB SUB LIST »').realHover();
+        cy.xpath("//div[@class='nav-menu-container']").contains('Sub Sub Item 1').should('be.visible');
+        cy.xpath("//div[@class='nav-menu-container']").contains('Sub Sub Item 2').should('be.visible');
+    });
+
     it("Should be able to interact with Select Menu Widgets", () => {
 
         cy.visit("https://www.demoqa.com/select-menu");

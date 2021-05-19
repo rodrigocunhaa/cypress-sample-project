@@ -13,5 +13,8 @@
     "cypress": "^6.6.0",
     "cypress-file-upload": "^5.0.7",
     "cypress-xpath": "^1.6.2"
+  },
+  "dependencies": {
+    "cypress-real-events": "^1.4.0"
   }
 }
