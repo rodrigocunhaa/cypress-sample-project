@@ -188,4 +188,30 @@ describe("Test Widgets on Demo QA site", () => {
         cy.xpath("//div[@aria-valuenow]").should('have.attr', 'style', "width: 50%;");
 
     });
+
+    it("Should be able to interact with Select Menu Widgets", () => {
+
+        cy.visit("https://www.demoqa.com/select-menu");
+
+        cy.xpath("//div[@id='withOptGroup']//div[contains(@class,'placeholder')]").should('have.text','Select Option');
+        cy.xpath("//div[@id='withOptGroup']//div[contains(@class,'placeholder')]").click();
+        cy.xpath("//*[contains(@tabindex,'-1')]").contains('A root option').click();
+
+        cy.xpath("//div[@id='selectOne']//div[contains(@class,'placeholder')]").should('have.text','Select Title');
+        cy.xpath("//div[@id='selectOne']//div[contains(@class,'placeholder')]").click();
+        cy.xpath("//*[contains(@tabindex,'-1')]").contains('Mrs.').click();
+
+        cy.xpath("//select[@id='oldSelectMenu']").select('Black');
+
+        cy.xpath("//div[contains(@class,'control')]//div[contains(@class,'placeholder')]").should('not.have.id').should('have.text','Select...');
+        cy.xpath("//div[contains(@class,'control')]//div[contains(@class,'placeholder')]").click();
+        cy.xpath("//*[contains(@tabindex,'-1')]").contains('Red').click();
+        cy.xpath("//*[contains(@tabindex,'-1')]").contains('Green').click();
+
+        cy.xpath("//select[@id='cars']")
+        .select(['Volvo', 'Opel'])
+        .invoke('val')
+        .should('deep.equal', ['volvo', 'opel']);
+
+    });
 });
