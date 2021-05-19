@@ -52,6 +52,41 @@ describe("Test Widgets on Demo QA site", () => {
         cy.xpath("//*[contains(@class,'auto-complete__single-value')]").contains('Purple').should('not.exist');
         cy.xpath("//*[contains(@class,'auto-complete__single-value')]").contains('Green').should('be.visible');
     });
+    
+    it("Should be able to interact with Date Picker Widgets", () => {
+
+        cy.visit("https://demoqa.com/date-picker");
+
+        cy.xpath("//input[@id='datePickerMonthYearInput']").click();
+
+        cy.xpath("//select[@class='react-datepicker__month-select']").select("July");
+
+        cy.xpath("//select[@class='react-datepicker__year-select']").select("1993");
+
+        cy.xpath("//div[@class='react-datepicker__week']//div[contains(@aria-label,'July 7th')]").click();
+
+        cy.xpath("//input[@id='datePickerMonthYearInput']").should('have.attr', 'value', '07/07/1993');
+
+        cy.xpath("//input[@id='dateAndTimePickerInput']").click();
+
+        cy.xpath("//div[contains(@class,'react-datepicker__month-dropdown-container')]").click();
+        
+        cy.xpath("//div[@class='react-datepicker__month-option']").contains("July").click();
+
+        cy.xpath("//div[contains(@class,'react-datepicker__year-dropdown-container')]").click();
+
+        for(let i = 0; i < 30; i++){
+            cy.xpath("//a[contains(@class,'react-datepicker__navigation--years-previous')]").click();
+        }
+
+        cy.xpath("//div[@class='react-datepicker__year-option']").contains("1993").click();
+
+        cy.xpath("//div[@class='react-datepicker__week']//div[contains(@aria-label,'July 7th')]").click();
+
+        cy.xpath("//div[@class='react-datepicker__time-box']").contains('22:00').scrollIntoView().click();
+
+        cy.xpath("//input[@id='dateAndTimePickerInput']").should('have.attr', 'value', 'July 7, 1993 10:00 PM');
+    });
 
     it("Should be able to interact with Slider Widgets", () => {
 
