@@ -9,6 +9,7 @@
   "author": "Alex Candido",
   "license": "ISC",
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^1.6.0",
     "cypress": "^6.6.0",
     "cypress-file-upload": "^5.0.7",
     "cypress-xpath": "^1.6.2"
