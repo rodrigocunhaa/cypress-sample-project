@@ -1,9 +1,6 @@
 package util;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -18,11 +15,13 @@ public class BasePage {
     private final WebDriver driver;
     private final WebDriverWait wait;
     private final Actions action;
+    String winHandleBefore;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
         wait = DriverFactory.getWait();
         action = new Actions(driver);
+        winHandleBefore = driver.getWindowHandle();
     }
 
     public void waitAndClick(By locator) {
@@ -46,8 +45,13 @@ public class BasePage {
     }
 
     public void waitAndSendKeys(By locator, String keys) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        driver.findElement(locator).sendKeys(keys);
+        wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        try {
+            driver.findElement(locator).sendKeys(keys);
+        } catch (ElementNotInteractableException e) {
+            action.sendKeys(driver.findElement(locator), keys);
+        }
+
     }
 
     public void clickRadioButton(By button){
@@ -76,6 +80,19 @@ public class BasePage {
         driver.switchTo().window(tabs.get(0));
     }
 
+    public void switchToWindow() {
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+        }
+    }
+
+    public void closeWindowAndReturn() {
+        driver.close();
+        driver.switchTo().window(winHandleBefore);
+    }
+
+
+
     public void selectByValue(By locator, String value) {
         Select dropdown = new Select(driver.findElement(locator));
         dropdown.selectByVisibleText(value);
@@ -93,6 +110,11 @@ public class BasePage {
 
     public boolean isElementPresent(By locator) {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+        return driver.findElements(locator).size() != 0;
+    }
+
+    public boolean isElementVisible(By locator) {
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
         return driver.findElements(locator).size() != 0;
     }
 }
