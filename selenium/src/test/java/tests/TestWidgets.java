@@ -14,6 +14,7 @@ import util.DriverFactory;
 public class TestWidgets {
     private WebDriver driver;
     private final WidgetsAccordianPage widgetsAccordianPage = new WidgetsAccordianPage();
+    private final WidgetsAutoCompletePage widgetsAutoCompletePage = new WidgetsAutoCompletePage();
     private BasePage page;
 
     @Before
@@ -63,6 +64,32 @@ public class TestWidgets {
         Assert.assertTrue(widgetsAccordianPage.isWhereDoesItComeFromCollapsedFlag());
         Assert.assertTrue(widgetsAccordianPage.getWhyDoWeUseItTitleText().contains("Why do we use it?"));
         Assert.assertTrue(widgetsAccordianPage.isWhyDoWeUseItCollapsedFlag());
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with Auto Complete Widgets")
+    public void testWidgetsAutoComplete() {
+        driver.get(Constants.TOOLS_QA_WIDGETS_AUTO_COMPLETE_URL);
+
+        widgetsAutoCompletePage.fillMultipleColorsAutoCompleteField("r");
+        widgetsAutoCompletePage.clickAutoCompleteOption("Green");
+        widgetsAutoCompletePage.fillMultipleColorsAutoCompleteField("r");
+        widgetsAutoCompletePage.clickAutoCompleteOption("Red");
+
+        Assert.assertTrue(widgetsAutoCompletePage.visibilityOfMultipleAutoCompleteLabel("Green"));
+        Assert.assertTrue(widgetsAutoCompletePage.visibilityOfMultipleAutoCompleteLabel("Red"));
+
+        widgetsAutoCompletePage.fillSingleColorsAutoCompleteField("r");
+        widgetsAutoCompletePage.clickAutoCompleteOption("Purple");
+
+        Assert.assertTrue(widgetsAutoCompletePage.visibilityOfSingleAutoCompleteLabel("Purple"));
+
+        widgetsAutoCompletePage.fillSingleColorsAutoCompleteField("r");
+        widgetsAutoCompletePage.clickAutoCompleteOption("Green");
+
+        Assert.assertTrue(widgetsAutoCompletePage.visibilityOfSingleAutoCompleteLabel("Green"));
+        Assert.assertFalse(widgetsAutoCompletePage.visibilityOfSingleAutoCompleteLabel("Purple"));
+
     }
 
     @After

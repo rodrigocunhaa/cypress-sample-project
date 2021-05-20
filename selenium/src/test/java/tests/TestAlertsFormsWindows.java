@@ -7,16 +7,20 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
 import pages.*;
+import util.BasePage;
 import util.Constants;
 import util.DriverFactory;
 
 public class TestAlertsFormsWindows {
     private WebDriver driver;
+    private BasePage page;
     private final AlertsFormsWindowsModalDialogsPage alertsFormsWindowsModalDialogsPage = new AlertsFormsWindowsModalDialogsPage();
+    private final AlertsFormsWindowsBrowserWindowsPage alertsFormsWindowsBrowserWindowsPage = new AlertsFormsWindowsBrowserWindowsPage();
 
     @Before
     public void before(){
         driver = DriverFactory.getDriver();
+        page = new BasePage(driver);
     }
 
     @Test
@@ -32,6 +36,27 @@ public class TestAlertsFormsWindows {
         alertsFormsWindowsModalDialogsPage.openLargeDialog();
         Assert.assertTrue(alertsFormsWindowsModalDialogsPage.getModalText().contains("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."));
         alertsFormsWindowsModalDialogsPage.closeLargeDialog();
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with browser windows")
+    public void testAlertsFormsWindowsBrowserWindows() {
+
+        driver.get(Constants.TOOLS_QA_ALERTS_FORMS_WINDOWS_BROWSER_WINDOWS_URL);
+
+        alertsFormsWindowsBrowserWindowsPage.clickTabButton();
+        page.switchToTab();
+        Assert.assertTrue(alertsFormsWindowsBrowserWindowsPage.getTabWindowText().contains("This is a sample page"));
+        page.closeTabAndReturn();
+
+        alertsFormsWindowsBrowserWindowsPage.clickWindowButton();
+        page.switchToWindow();
+        Assert.assertTrue(alertsFormsWindowsBrowserWindowsPage.getTabWindowText().contains("This is a sample page"));
+        page.closeWindowAndReturn();
+
+        alertsFormsWindowsBrowserWindowsPage.clickMessageWindowButton();
+        page.switchToWindow();
+        page.closeWindowAndReturn();
     }
 
     @After
