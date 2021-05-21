@@ -16,6 +16,7 @@ public class TestAlertsFormsWindows {
     private BasePage page;
     private final AlertsFormsWindowsModalDialogsPage alertsFormsWindowsModalDialogsPage = new AlertsFormsWindowsModalDialogsPage();
     private final AlertsFormsWindowsBrowserWindowsPage alertsFormsWindowsBrowserWindowsPage = new AlertsFormsWindowsBrowserWindowsPage();
+    private final AlertsFormsWindowsAlertsPage alertsFormsWindowsAlertsPage = new AlertsFormsWindowsAlertsPage();
 
     @Before
     public void before(){
@@ -57,6 +58,64 @@ public class TestAlertsFormsWindows {
         alertsFormsWindowsBrowserWindowsPage.clickMessageWindowButton();
         page.switchToWindow();
         page.closeWindowAndReturn();
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with alerts 1  - Click Button to see alert")
+    public void testAlertsFormsWindowsAlerts1() {
+        driver.get(Constants.TOOLS_QA_ALERTS_FORMS_WINDOWS_ALERTS_URL);
+
+        alertsFormsWindowsAlertsPage.clickAlertButton();
+
+        Assert.assertEquals(alertsFormsWindowsAlertsPage.getTextFromAlert(), "You clicked a button");
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with alerts 2 - Alert appears after 5 seconds")
+    public void testAlertsFormsWindowsAlerts2() {
+        driver.get(Constants.TOOLS_QA_ALERTS_FORMS_WINDOWS_ALERTS_URL);
+
+        alertsFormsWindowsAlertsPage.clickTimeAlertButton();
+
+        Assert.assertEquals(alertsFormsWindowsAlertsPage.getTextFromTimerAlert(), "This alert appeared after 5 seconds");
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with alerts 3 - Select Cancel on confirm box")
+    public void testAlertsFormsWindowsAlerts3() {
+        driver.get(Constants.TOOLS_QA_ALERTS_FORMS_WINDOWS_ALERTS_URL);
+
+        alertsFormsWindowsAlertsPage.clickConfirmButton();
+
+        alertsFormsWindowsAlertsPage.clickCancelConfirm();
+
+        Assert.assertTrue(alertsFormsWindowsAlertsPage.getConfirmResult().contains("You selected Cancel"));
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with alerts 4 - Select Ok on confirm box")
+    public void testAlertsFormsWindowsAlerts4() {
+        driver.get(Constants.TOOLS_QA_ALERTS_FORMS_WINDOWS_ALERTS_URL);
+
+        alertsFormsWindowsAlertsPage.clickConfirmButton();
+
+        alertsFormsWindowsAlertsPage.clickAcceptConfirm();
+
+        Assert.assertTrue(alertsFormsWindowsAlertsPage.getConfirmResult().contains("You selected Ok"));
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with alerts 5 - Fill prompt box")
+    public void testAlertsFormsWindowsAlerts5() {
+        driver.get(Constants.TOOLS_QA_ALERTS_FORMS_WINDOWS_ALERTS_URL);
+
+        alertsFormsWindowsAlertsPage.clickPromptButton();
+
+        alertsFormsWindowsAlertsPage.sendKeysToAlert("Luiz Inácio Lula da Silva");
+
+        alertsFormsWindowsAlertsPage.clickAcceptConfirm();
+
+        Assert.assertTrue(alertsFormsWindowsAlertsPage.getPromptResult().contains("You entered Luiz Inácio Lula da Silva"));
     }
 
     @After
