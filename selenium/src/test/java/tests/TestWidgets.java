@@ -15,6 +15,8 @@ public class TestWidgets {
     private WebDriver driver;
     private final WidgetsAccordianPage widgetsAccordianPage = new WidgetsAccordianPage();
     private final WidgetsAutoCompletePage widgetsAutoCompletePage = new WidgetsAutoCompletePage();
+    private final WidgetsDatePicker widgetsDatePicker = new WidgetsDatePicker();
+
     private BasePage page;
 
     @Before
@@ -89,6 +91,19 @@ public class TestWidgets {
 
         Assert.assertTrue(widgetsAutoCompletePage.visibilityOfSingleAutoCompleteLabel("Green"));
         Assert.assertFalse(widgetsAutoCompletePage.visibilityOfSingleAutoCompleteLabel("Purple"));
+
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with Date Picker Widgets")
+    public void testWidgetsDatePicker() {
+        driver.get(Constants.TOOLS_QA_WIDGETS_DATE_PICKER_URL);
+
+        widgetsDatePicker.fillDatePicker();
+        Assert.assertTrue(widgetsDatePicker.getValueFromDatePicker().contains("07/07/1993"));
+
+        widgetsDatePicker.fillDateAndTimePicker();
+        Assert.assertTrue(widgetsDatePicker.getValueFromDateAndTimePicker().contains("July 7, 2021 10:00 PM"));
 
     }
 

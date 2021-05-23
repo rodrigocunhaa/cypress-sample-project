@@ -38,5 +38,4 @@ public class WidgetsAutoCompletePage {
             return false;
         }
     }
-
 }
