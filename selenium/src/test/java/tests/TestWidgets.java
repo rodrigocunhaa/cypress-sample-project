@@ -15,7 +15,8 @@ public class TestWidgets {
     private WebDriver driver;
     private final WidgetsAccordianPage widgetsAccordianPage = new WidgetsAccordianPage();
     private final WidgetsAutoCompletePage widgetsAutoCompletePage = new WidgetsAutoCompletePage();
-    private final WidgetsDatePicker widgetsDatePicker = new WidgetsDatePicker();
+    private final WidgetsDatePickerPage widgetsDatePickerPage = new WidgetsDatePickerPage();
+    private final WidgetsSliderPage widgetsSliderPage = new WidgetsSliderPage();
 
     private BasePage page;
 
@@ -99,11 +100,21 @@ public class TestWidgets {
     public void testWidgetsDatePicker() {
         driver.get(Constants.TOOLS_QA_WIDGETS_DATE_PICKER_URL);
 
-        widgetsDatePicker.fillDatePicker();
-        Assert.assertTrue(widgetsDatePicker.getValueFromDatePicker().contains("07/07/1993"));
+        widgetsDatePickerPage.fillDatePicker();
+        Assert.assertTrue(widgetsDatePickerPage.getValueFromDatePicker().contains("07/07/1993"));
 
-        widgetsDatePicker.fillDateAndTimePicker();
-        Assert.assertTrue(widgetsDatePicker.getValueFromDateAndTimePicker().contains("July 7, 2021 10:00 PM"));
+        widgetsDatePickerPage.fillDateAndTimePicker();
+        Assert.assertTrue(widgetsDatePickerPage.getValueFromDateAndTimePicker().contains("July 7, 2021 10:00 PM"));
+
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with Slider Widgets")
+    public void testWidgetsSlider() {
+        driver.get(Constants.TOOLS_QA_WIDGETS_SLIDER_URL);
+
+        widgetsSliderPage.move();
+        Assert.assertEquals(widgetsSliderPage.getValueFromSlider(), "25");
 
     }
 

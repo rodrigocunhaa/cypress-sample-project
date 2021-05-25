@@ -16,5 +16,6 @@ public class Constants {
     public static final String TOOLS_QA_ALERTS_FORMS_WINDOWS_BROWSER_WINDOWS_URL = "https://demoqa.com/browser-windows";
     public static final String TOOLS_QA_ALERTS_FORMS_WINDOWS_ALERTS_URL = "https://www.demoqa.com/alerts";
     public static final String TOOLS_QA_WIDGETS_DATE_PICKER_URL = "https://demoqa.com/date-picker";
+    public static final String TOOLS_QA_WIDGETS_SLIDER_URL = "https://demoqa.com/slider";
 
 }
