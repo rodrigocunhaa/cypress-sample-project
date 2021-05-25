@@ -19,6 +19,7 @@ public class TestWidgets {
     private final WidgetsSliderPage widgetsSliderPage = new WidgetsSliderPage();
     private final WidgetsProgressBarPage widgetsProgressBarPage = new WidgetsProgressBarPage();
     private final WidgetsTabsPage widgetsTabsPage = new WidgetsTabsPage();
+    private final WidgetsMenu widgetsMenu = new WidgetsMenu();
 
     private BasePage page;
 
@@ -246,6 +247,26 @@ public class TestWidgets {
         Assert.assertEquals("true", widgetsTabsPage.getDemoTabPaneMoreAttributes().get(0));
         Assert.assertNotEquals("active show", widgetsTabsPage.getDemoTabPaneMoreAttributes().get(1));
 
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with Menu Widgets")
+    public void testMenu() throws InterruptedException {
+        driver.get(Constants.TOOLS_QA_WIDGETS_MENU_URL);
+
+        Assert.assertTrue(widgetsMenu.isMenuItem1Visible());
+        Assert.assertTrue(widgetsMenu.isMenuItem2Visible());
+        Assert.assertTrue(widgetsMenu.isMenuItem3Visible());
+
+        widgetsMenu.mouseOverMenuItem2();
+
+        Assert.assertTrue(widgetsMenu.isSubItemVisible());
+        Assert.assertTrue(widgetsMenu.isSubSubListVisible());
+
+        widgetsMenu.mouseOverSubSubList();
+
+        Assert.assertTrue(widgetsMenu.isMenuSubItem1Visible());
+        Assert.assertTrue(widgetsMenu.isMenuSubItem2Visible());
     }
 
     @After

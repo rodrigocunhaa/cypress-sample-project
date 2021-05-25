@@ -115,4 +115,10 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
         return driver.findElements(locator).size() != 0;
     }
+
+    public void mouseOverElement(By locator) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        WebElement element = driver.findElement(locator);
+        action.moveToElement(element).perform();
+    }
 }
