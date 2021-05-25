@@ -17,6 +17,8 @@ public class TestWidgets {
     private final WidgetsAutoCompletePage widgetsAutoCompletePage = new WidgetsAutoCompletePage();
     private final WidgetsDatePickerPage widgetsDatePickerPage = new WidgetsDatePickerPage();
     private final WidgetsSliderPage widgetsSliderPage = new WidgetsSliderPage();
+    private final WidgetsProgressBarPage widgetsProgressBarPage = new WidgetsProgressBarPage();
+    private final WidgetsTabsPage widgetsTabsPage = new WidgetsTabsPage();
 
     private BasePage page;
 
@@ -115,6 +117,134 @@ public class TestWidgets {
 
         widgetsSliderPage.move();
         Assert.assertEquals(widgetsSliderPage.getValueFromSlider(), "25");
+
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with Progress Bar Widgets")
+    public void testProgressBar() throws InterruptedException {
+        driver.get(Constants.TOOLS_QA_WIDGETS_PROGRESS_BAR_URL);
+
+        widgetsProgressBarPage.clickStartStopButton();
+
+        Thread.sleep(5000);
+        widgetsProgressBarPage.clickStartStopButton();
+
+        Assert.assertEquals("50", widgetsProgressBarPage.getProgressBarAttributes().get(0));
+        Assert.assertEquals("50%", widgetsProgressBarPage.getProgressBarAttributes().get(1));
+        Assert.assertEquals("width: 50%;", widgetsProgressBarPage.getProgressBarAttributes().get(2));
+
+        widgetsProgressBarPage.clickStartStopButton();
+
+        Thread.sleep(5000);
+
+        Assert.assertEquals("100", widgetsProgressBarPage.getProgressBarAttributes().get(0));
+        Assert.assertEquals( "100%", widgetsProgressBarPage.getProgressBarAttributes().get(1));
+        Assert.assertEquals( "width: 100%;", widgetsProgressBarPage.getProgressBarAttributes().get(2));
+
+        Assert.assertEquals("100%", widgetsProgressBarPage.getSuccessTextValue());
+
+        widgetsProgressBarPage.clickResetButton();
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with Tabs Widgets")
+    public void testTabs() {
+        driver.get(Constants.TOOLS_QA_WIDGETS_TABS_URL);
+
+        Assert.assertEquals("What", widgetsTabsPage.getDemoTabWhatAttributes().get(0));
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabWhatAttributes().get(1));
+        Assert.assertEquals("nav-item nav-link active", widgetsTabsPage.getDemoTabWhatAttributes().get(2));
+
+        Assert.assertEquals("Origin", widgetsTabsPage.getDemoTabOriginAttributes().get(0));
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabOriginAttributes().get(1));
+        Assert.assertNotEquals("nav-link active", widgetsTabsPage.getDemoTabOriginAttributes().get(2));
+
+        Assert.assertEquals("Use", widgetsTabsPage.getDemoTabUseAttributes().get(0));
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabUseAttributes().get(1));
+        Assert.assertNotEquals("nav-link active", widgetsTabsPage.getDemoTabUseAttributes().get(2));
+
+        Assert.assertEquals("More", widgetsTabsPage.getDemoTabMoreAttributes().get(0));
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabMoreAttributes().get(1));
+        Assert.assertNotEquals("nav-link active", widgetsTabsPage.getDemoTabMoreAttributes().get(2));
+
+        Assert.assertTrue(widgetsTabsPage.getDemoTabPanelWhatText().contains("Lorem Ipsum is simply dummy text of the printing and typesetting industry."));
+
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabPaneWhatAttributes().get(0));
+        Assert.assertEquals("fade tab-pane active show", widgetsTabsPage.getDemoTabPaneWhatAttributes().get(1));
+
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabPaneOriginAttributes().get(0));
+        Assert.assertNotEquals("active show", widgetsTabsPage.getDemoTabPaneOriginAttributes().get(1));
+
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabPaneUseAttributes().get(0));
+        Assert.assertNotEquals("active show", widgetsTabsPage.getDemoTabPaneUseAttributes().get(1));
+
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabPaneMoreAttributes().get(0));
+        Assert.assertNotEquals("active show", widgetsTabsPage.getDemoTabPaneMoreAttributes().get(1));
+
+        widgetsTabsPage.clickDemoTabOrigin();
+
+        Assert.assertEquals("What", widgetsTabsPage.getDemoTabWhatAttributes().get(0));
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabWhatAttributes().get(1));
+        Assert.assertNotEquals("nav-link active", widgetsTabsPage.getDemoTabWhatAttributes().get(2));
+
+        Assert.assertEquals("Origin", widgetsTabsPage.getDemoTabOriginAttributes().get(0));
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabOriginAttributes().get(1));
+        Assert.assertEquals("nav-item nav-link active", widgetsTabsPage.getDemoTabOriginAttributes().get(2));
+
+        Assert.assertEquals("Use", widgetsTabsPage.getDemoTabUseAttributes().get(0));
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabUseAttributes().get(1));
+        Assert.assertNotEquals("nav-link active", widgetsTabsPage.getDemoTabUseAttributes().get(2));
+
+        Assert.assertEquals("More", widgetsTabsPage.getDemoTabMoreAttributes().get(0));
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabMoreAttributes().get(1));
+        Assert.assertNotEquals("nav-link active", widgetsTabsPage.getDemoTabMoreAttributes().get(2));
+
+        Assert.assertTrue(widgetsTabsPage.getDemoTabPanelOriginText().contains("Contrary to popular belief, Lorem Ipsum is not simply random text."));
+
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabPaneWhatAttributes().get(0));
+        Assert.assertNotEquals("active show", widgetsTabsPage.getDemoTabPaneWhatAttributes().get(1));
+
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabPaneOriginAttributes().get(0));
+        Assert.assertEquals("fade tab-pane active show", widgetsTabsPage.getDemoTabPaneOriginAttributes().get(1));
+
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabPaneUseAttributes().get(0));
+        Assert.assertNotEquals("active show", widgetsTabsPage.getDemoTabPaneUseAttributes().get(1));
+
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabPaneMoreAttributes().get(0));
+        Assert.assertNotEquals("active show", widgetsTabsPage.getDemoTabPaneMoreAttributes().get(1));
+
+        widgetsTabsPage.clickDemoTabUse();
+
+        Assert.assertEquals("What", widgetsTabsPage.getDemoTabWhatAttributes().get(0));
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabWhatAttributes().get(1));
+        Assert.assertNotEquals("nav-link active", widgetsTabsPage.getDemoTabWhatAttributes().get(2));
+
+        Assert.assertEquals("Origin", widgetsTabsPage.getDemoTabOriginAttributes().get(0));
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabOriginAttributes().get(1));
+        Assert.assertNotEquals("nav-link active", widgetsTabsPage.getDemoTabOriginAttributes().get(2));
+
+        Assert.assertEquals("Use", widgetsTabsPage.getDemoTabUseAttributes().get(0));
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabUseAttributes().get(1));
+        Assert.assertEquals("nav-item nav-link active", widgetsTabsPage.getDemoTabUseAttributes().get(2));
+
+        Assert.assertEquals("More", widgetsTabsPage.getDemoTabMoreAttributes().get(0));
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabMoreAttributes().get(1));
+        Assert.assertNotEquals("nav-link active", widgetsTabsPage.getDemoTabMoreAttributes().get(2));
+
+        Assert.assertTrue(widgetsTabsPage.getDemoTabPanelUseText().contains("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."));
+
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabPaneWhatAttributes().get(0));
+        Assert.assertNotEquals("active show", widgetsTabsPage.getDemoTabPaneWhatAttributes().get(1));
+
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabPaneOriginAttributes().get(0));
+        Assert.assertNotEquals("active show", widgetsTabsPage.getDemoTabPaneOriginAttributes().get(1));
+
+        Assert.assertEquals("false", widgetsTabsPage.getDemoTabPaneUseAttributes().get(0));
+        Assert.assertEquals("fade tab-pane active show", widgetsTabsPage.getDemoTabPaneUseAttributes().get(1));
+
+        Assert.assertEquals("true", widgetsTabsPage.getDemoTabPaneMoreAttributes().get(0));
+        Assert.assertNotEquals("active show", widgetsTabsPage.getDemoTabPaneMoreAttributes().get(1));
 
     }
 
