@@ -91,7 +91,6 @@ public class BasePage {
         driver.switchTo().window(winHandleBefore);
     }
 
-
     public void selectByValue(By locator, String value) {
         Select dropdown = new Select(driver.findElement(locator));
         dropdown.selectByVisibleText(value);

@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import util.BasePage;
 import util.DriverFactory;
 
-public class WidgetsDatePicker {
+public class WidgetsDatePickerPage {
     private final WebDriver driver = DriverFactory.getDriver();
     private final BasePage page = new BasePage(driver);
     private final By datePicker = By.xpath("//input[@id='datePickerMonthYearInput']");
