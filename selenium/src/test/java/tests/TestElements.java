@@ -1,6 +1,5 @@
 package tests;
 
-import com.sun.xml.internal.rngom.parse.host.Base;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

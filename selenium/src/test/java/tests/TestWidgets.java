@@ -20,6 +20,7 @@ public class TestWidgets {
     private final WidgetsProgressBarPage widgetsProgressBarPage = new WidgetsProgressBarPage();
     private final WidgetsTabsPage widgetsTabsPage = new WidgetsTabsPage();
     private final WidgetsMenu widgetsMenu = new WidgetsMenu();
+    private final WidgetsToolTipsPage widgetsToolTipsPage = new WidgetsToolTipsPage();
 
     private BasePage page;
 
@@ -247,6 +248,28 @@ public class TestWidgets {
         Assert.assertEquals("true", widgetsTabsPage.getDemoTabPaneMoreAttributes().get(0));
         Assert.assertNotEquals("active show", widgetsTabsPage.getDemoTabPaneMoreAttributes().get(1));
 
+    }
+
+    @Test
+    @DisplayName("Should be able to interact with Tool Tips Widgets")
+    public void testToolTips() throws InterruptedException {
+        driver.get(Constants.TOOLS_QA_WIDGETS_TOOL_TIPS_URL);
+
+        String actualResult = "You hovered over the Button";
+        String expectedResult =  widgetsToolTipsPage.getHoverMeToSeeButtonToolTipText();
+        Assert.assertEquals(actualResult,expectedResult);
+
+        actualResult = "You hovered over the text field";
+        expectedResult =  widgetsToolTipsPage.getTextFieldToolTipText();
+        Assert.assertEquals(actualResult,expectedResult);
+
+        actualResult = "You hovered over the Contrary";
+        expectedResult =  widgetsToolTipsPage.getContraryTextToolTipText();
+        Assert.assertEquals(actualResult,expectedResult);
+
+        actualResult = "You hovered over the 1.10.32";
+        expectedResult =  widgetsToolTipsPage.getNumberTextToolTipText();
+        Assert.assertEquals(actualResult,expectedResult);
     }
 
     @Test
