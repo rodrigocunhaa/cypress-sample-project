@@ -21,6 +21,7 @@ public class Constants {
     public static final String TOOLS_QA_WIDGETS_TABS_URL = "https://www.demoqa.com/tabs";
     public static final String TOOLS_QA_WIDGETS_TOOL_TIPS_URL = "https://demoqa.com/tool-tips";
     public static final String TOOLS_QA_WIDGETS_MENU_URL = "https://www.demoqa.com/menu";
+    public static final String TOOLS_QA_WIDGETS_SELECT_MENU_URL = "https://demoqa.com/select-menu";
 
 
 }

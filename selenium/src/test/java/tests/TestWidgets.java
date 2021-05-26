@@ -11,6 +11,9 @@ import util.BasePage;
 import util.Constants;
 import util.DriverFactory;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class TestWidgets {
     private WebDriver driver;
     private final WidgetsAccordianPage widgetsAccordianPage = new WidgetsAccordianPage();
@@ -21,11 +24,12 @@ public class TestWidgets {
     private final WidgetsTabsPage widgetsTabsPage = new WidgetsTabsPage();
     private final WidgetsMenu widgetsMenu = new WidgetsMenu();
     private final WidgetsToolTipsPage widgetsToolTipsPage = new WidgetsToolTipsPage();
+    private final WidgetsSelectMenuPage widgetsSelectMenuPage = new WidgetsSelectMenuPage();
 
     private BasePage page;
 
     @Before
-    public void before(){
+    public void before() {
         driver = DriverFactory.getDriver();
         page = new BasePage(driver);
     }
@@ -292,8 +296,39 @@ public class TestWidgets {
         Assert.assertTrue(widgetsMenu.isMenuSubItem2Visible());
     }
 
+    @Test
+    @DisplayName("Should be able to interact with Select Menu Widgets")
+    public void testSelectMenu() {
+        driver.get(Constants.TOOLS_QA_WIDGETS_SELECT_MENU_URL);
+
+        widgetsSelectMenuPage.selectValueField("A root option");
+
+        Assert.assertTrue(widgetsSelectMenuPage.assertSelectValueFieldSelectedOption("A root option"));
+
+        widgetsSelectMenuPage.selectOneField("Mrs.");
+
+        Assert.assertTrue(widgetsSelectMenuPage.assertSelectOneFieldSelectedOption("Mrs."));
+
+        widgetsSelectMenuPage.oldStyleSelectMenuField("Black");
+
+        String expectedResult = "Black";
+        String actualResult = widgetsSelectMenuPage.getOldStyleSelectMenuFieldSelectedOption();
+        Assert.assertEquals(expectedResult,actualResult);
+
+        List<String> multipleDropDownOptionList = Arrays.asList("Red", "Green");
+        widgetsSelectMenuPage.multipleDropDownField(multipleDropDownOptionList);
+
+        Assert.assertTrue(widgetsSelectMenuPage.assertMultipleDropDownFieldSelectedOptions(multipleDropDownOptionList));
+
+        List<String> standardMultiSelectOptionList = Arrays.asList("Volvo","Opel");
+        widgetsSelectMenuPage.standardMultiSelect(standardMultiSelectOptionList);
+
+        List<String> actualResultList = widgetsSelectMenuPage.getStandardMultiSelectFieldSelectedOptions();
+        Assert.assertArrayEquals(standardMultiSelectOptionList.toArray(),actualResultList.toArray());
+    }
+
     @After
-    public void after(){
+    public void after() {
         DriverFactory.quitDriver();
     }
 }

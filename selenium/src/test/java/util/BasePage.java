@@ -29,6 +29,12 @@ public class BasePage {
         driver.findElement(locator).click();
     }
 
+    public void waitAndCommandClick(By locator) {
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+        WebElement element = driver.findElement(locator);
+        action.keyDown(Keys.COMMAND).click(element).keyUp(Keys.COMMAND).perform();
+    }
+
     public void waitAndClear(By locator) {
         wait.until(ExpectedConditions.elementToBeClickable(locator));
         driver.findElement(locator).clear();
@@ -94,6 +100,21 @@ public class BasePage {
     public void selectByValue(By locator, String value) {
         Select dropdown = new Select(driver.findElement(locator));
         dropdown.selectByVisibleText(value);
+    }
+
+    public String getSelectedOption(By locator) {
+        Select dropdown = new Select(driver.findElement(locator));
+        return dropdown.getFirstSelectedOption().getText();
+    }
+
+    public List<String> getAllSelectedOptions(By locator) {
+        Select dropdown = new Select(driver.findElement(locator));
+        List<WebElement> selectedOptions = dropdown.getAllSelectedOptions();
+        List<String> selectedOptionsList = new ArrayList<>();
+        for (WebElement selectedOption : selectedOptions) {
+            selectedOptionsList.add(selectedOption.getText());
+        }
+        return selectedOptionsList;
     }
 
     public void uploadImage(By locator, String fileName) {
