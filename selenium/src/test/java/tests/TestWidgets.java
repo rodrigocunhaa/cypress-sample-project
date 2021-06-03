@@ -174,7 +174,8 @@ public class TestWidgets {
         Assert.assertEquals("false", widgetsTabsPage.getDemoTabMoreAttributes().get(1));
         Assert.assertNotEquals("nav-link active", widgetsTabsPage.getDemoTabMoreAttributes().get(2));
 
-        Assert.assertTrue(widgetsTabsPage.getDemoTabPanelWhatText().contains("Lorem Ipsum is simply dummy text of the printing and typesetting industry."));
+        Assert.assertTrue(widgetsTabsPage.getDemoTabPanelWhatText()
+                          .contains("Lorem Ipsum is simply dummy text of the printing and typesetting industry."));
 
         Assert.assertEquals("false", widgetsTabsPage.getDemoTabPaneWhatAttributes().get(0));
         Assert.assertEquals("fade tab-pane active show", widgetsTabsPage.getDemoTabPaneWhatAttributes().get(1));
